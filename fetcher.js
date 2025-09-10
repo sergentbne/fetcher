@@ -273,12 +273,6 @@
 
     const match = currentUrl.match(regex);
 
-    // Check if a match was found and log the result
-    if (match) {
-      console.log(match[1]); // This will log the first element after the slash
-    } else {
-      console.log("No match found.");
-    }
     const defaultFilenameBase = 'gcpd_matches';
 
     const cfg = Object.assign(
@@ -287,14 +281,14 @@
         delay: 100,
         maxPages: 2000,
         verbose: true,
-        filenameBase: match ? match[1] : defaultFilenameBase,
+        filenameBase: match ? match[1] + "_casual" : defaultFilenameBase + "_casual",
         parseDates: true,
         parseNumbers: true,
         dedupe: true
       },
       opts || {}
     );
-
+    console.log(cfg.filenameBase)
     const base = location.origin + location.pathname.replace(/\/$/, '');
     const sessionid = getSessionID();
     if (cfg.verbose)
@@ -423,7 +417,6 @@
   gcpdFetchAndParseAll({
     delay: 100,
     maxPages: 2000,
-    filenameBase: 'gcpd_matches',
     verbose: true
   })
     .then((r) => console.log('finished', r))
