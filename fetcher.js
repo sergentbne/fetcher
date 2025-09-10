@@ -267,13 +267,27 @@
 
   // ----- main fetch + parse -----
   async function gcpdFetchAndParseAll(opts) {
+    const currentUrl = window.location.href;
+
+    const regex = /(?:profiles|id)\/([^/]+)/;
+
+    const match = currentUrl.match(regex);
+
+    // Check if a match was found and log the result
+    if (match) {
+      console.log(match[1]); // This will log the first element after the slash
+    } else {
+      console.log("No match found.");
+    }
+    const defaultFilenameBase = 'gcpd_matches';
+
     const cfg = Object.assign(
       {
         tab: 'playermatchhistory',
         delay: 100,
         maxPages: 2000,
         verbose: true,
-        filenameBase: 'gcpd_matches',
+        filenameBase: match ? match[1] : defaultFilenameBase,
         parseDates: true,
         parseNumbers: true,
         dedupe: true
